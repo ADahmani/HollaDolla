@@ -1,0 +1,24 @@
+{
+  "name": "HollaDollaApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "invariant": "^2.2.1",
+    "lodash": "^4.13.1",
+    "react": "^15.0.2",
+    "react-native": "^0.26.2",
+    "react-native-scrollable-tab-view": "^0.4.3",
+    "react-native-vector-icons": "^2.0.2",
+    "react-relay": "^0.8.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-preset-react-native": "^1.8.0",
+    "babel-relay-plugin": "^0.8.1",
+    "graphql": "^0.6.0",
+    "sync-request": "^3.0.1"
+  }
+}

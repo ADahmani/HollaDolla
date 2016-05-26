@@ -1,0 +1,5 @@
+{
+  "graphql": {
+    "local": "http://localhost:3333/graphql"
+  }
+}

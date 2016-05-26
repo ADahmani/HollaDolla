@@ -1,0 +1,7 @@
+{
+  "env": "development",
+  "is_dev": true,
+  "mongo": {
+    "connectionString": "mongodb://127.0.0.1/holladolla"
+  }
+}

@@ -7,21 +7,20 @@ import {
   Image,
   TouchableHighlight,
   ListView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 var {width, height} = Dimensions.get('window');
 
 var list = [
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')},
-  {name: 'vacances', image: require('../../imgs/projet-types/vacances.jpg')}
+  {type: 'vacances', name: 'Vacances', image: require('../../imgs/projet-types/vacances.jpg')},
+  {type: 'weekend', name: 'Weekend', image: require('../../imgs/projet-types/weekend.jpg')},
+  {type: 'soiree', name: 'Soirée', image: require('../../imgs/projet-types/soiree.png')},
+  {type: 'restaurant', name: 'Restaurant', image: require('../../imgs/projet-types/restaurant.png')},
+  {type: 'colocation', name: 'Colocation', image: require('../../imgs/projet-types/vacances.jpg')},
+  {type: 'cadeau', name: 'Cadeau', image: require('../../imgs/projet-types/cadeau.png')},
+  {type: 'evg', name: 'EVG', image: require('../../imgs/projet-types/evg.png')},
+  {type: 'divers', name: 'Divers', image: require('../../imgs/projet-types/divers.png')},
+
 ];
 
 export default class ProjetTypeView extends Component {
@@ -50,9 +49,14 @@ export default class ProjetTypeView extends Component {
    return {width: size, height: size}
   }
 
+  _SelectType(type) {
+    this.props.app.navigate('PROJET_ITEM', {type})
+  }
+
   renderData(data, sectionID, rowID, highlightRow){
     return (
-      <View style={[styles.box, this.calculatedSize()]}>
+      <TouchableHighlight onPress={this._SelectType.bind(this, data.type)}>
+        <View style={[styles.box, this.calculatedSize()]}>
           <Image
            source={data.image}
            style={[styles.boxImage, this.calculatedSize()]}>
@@ -60,18 +64,20 @@ export default class ProjetTypeView extends Component {
               <Text style={[styles.headline, this.calculatedSize()]} >{data.name}</Text>
             </View>
            </Image>
-
       </View>
+      </TouchableHighlight>
     );
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Text>{this.props.type}</Text>
           <ListView
-              contentContainerStyle={styles.list}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderData.bind(this)} />
+            contentContainerStyle={styles.list}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderData.bind(this)}
+          />
       </View>
     );
   }
@@ -93,7 +99,7 @@ var styles = StyleSheet.create({
     boxImage: {
     },
     backdropText: {
-      backgroundColor: 'rgba(0,0,0,0.4)',
+      backgroundColor: 'rgba(0,0,0,0.2)',
       alignItems: 'center',
       justifyContent: 'center',
       padding: 25,

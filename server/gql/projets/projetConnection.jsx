@@ -11,6 +11,14 @@ import {
 function resolveProjetsConnection(parent, args, info) {
   var query = {};
   // filtring
+  console.log("///////////");
+  var authedUser = info.rootValue.authedUser;
+  console.log(authedUser);
+  query.participants = authedUser._id.toString();;
+  console.log("///////////");
+
+
+  console.log('query', query);
   args.filter = args.filter || {};
 
   const filter = args.filter || {};
@@ -34,6 +42,7 @@ function resolveProjetsConnection(parent, args, info) {
 //     state: {type: GraphQLString}
 //   },
 // });
+
 
 const Connection = createConnection('Projets', ProjetType);
 

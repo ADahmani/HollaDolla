@@ -3,5 +3,6 @@
   "presets": [
     "./scripts/babelRelayPlugin",
     "react-native"
-  ]
+  ],
+  "compact" : true
 }

@@ -1,4 +1,5 @@
 const types = [
+  require('./user/UserType'),
   require('./projets/ProjetType'),
 ];
 

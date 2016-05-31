@@ -3,12 +3,14 @@ var {nodeInterface, globalIdField} = Interface;
 import {getProjection} from '../Util';
 import {resolveSingleById} from '../resolveHelper';
 
+import OwnerType, {resolveMulti as resolveUsers} from './ProjetOwnerType';
+
 import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
+  GraphQLList
 } from 'graphql';
-
 
 export default new GraphQLObjectType({
   name: 'Projet',
@@ -22,6 +24,15 @@ export default new GraphQLObjectType({
     name: {
       type: GraphQLString,
       description: 'Projet Name'
+    },
+    type: {
+      type: GraphQLString,
+      description: 'Projet Type'
+    },
+    participants: {
+      type: new GraphQLList(OwnerType),
+      description: 'Projet Type',
+      resolve: projet => resolveUsers({ids: projet.participants})
     }
   }),
   interfaces: [nodeInterface]

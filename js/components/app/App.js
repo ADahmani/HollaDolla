@@ -4,7 +4,8 @@ import Relay from 'react-relay';
 import _ from 'lodash';
 import Styles from './App.style.js';
 import getRoute from '../../ViewsRoutes/Routes';
-var PAGE_SIZE = 3;
+import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
+import MainScreen from './main';
 import {
   View,
   Image,
@@ -50,6 +51,36 @@ export class App extends Component {
     navigator.pop();
   }
 
+  _onLoginComplete() {
+    _.delay(() => {
+      console.log(this.props.viewer);
+      this.refs.navigator.resetTo(
+        getRoute('START_SCREEN')
+      );
+    }, 100);
+  }
+
+  login(email, password) {
+    Relay.Store.commitUpdate(
+      new EmailLoginMutation({
+        viewer: this.props.viewer,
+        email: email,
+        password: password
+      }),
+      {
+        onSuccess: (data) => {
+          // this.props.relay.forceFetch();
+          this._onLoginComplete();
+        },
+        onFailure: (err) => {
+          var error = err.getError() || new Error('Mutation failed.');
+          console.error(error);
+          this.setState({state: 'fucked'});
+        }
+      }
+    );
+  }
+
   renderScene(route, navigator) {
     var osHeader, pushModalMarkup;
     var RouteComponent = route.Component;
@@ -59,7 +90,7 @@ export class App extends Component {
           <View style={Styles.pushModalContainer}>
             <Text>Title</Text>
             <Text>{this.state.pushModalTitle}</Text>
-            <Text>Message</Text>
+            <Text>Messagse</Text>
             <Text>{this.state.pushModalMessage}</Text>
             <Text>Additional Data</Text>
             <Text>{this.state.pushModalAdditionalData}</Text>
@@ -79,27 +110,28 @@ export class App extends Component {
     );
   }
 
-  navigate(route) {
-    this.refs.navigator.replace(getRoute(route));
+  navigate(route, attrs) {
+    this.refs.navigator.replace(getRoute(route, attrs));
   }
 
   navigateToTop() {
     this.refs.navigator.popToTop();
   }
 
-  navigateReplace(route) {
-    this.refs.navigator.replace(route);
+  navigateReplace(route, attrs) {
+    this.refs.navigator.replace(getRoute(route, attrs));
   }
 
-  navigateJumpTo(route) {
-    this.refs.navigator.jumpTo(route);
+  navigateJumpTo(route, attrs) {
+    this.refs.navigator.jumpTo(getRoute(route, attrs));
   }
 
   render() {
+    var initialRoute = this.props.viewer.me ? 'START_SCREEN' : 'LOGIN_SCREEN';
     return (
       <Navigator
         ref='navigator'
-        initialRoute={getRoute('START_SCREEN')}
+        initialRoute={getRoute(initialRoute)}
         renderScene={this.renderScene.bind(this)}
         viewer={this.props.viewer}
       />
@@ -108,26 +140,17 @@ export class App extends Component {
 }
 export var appRelay = (props) => {
   return Relay.createContainer(App, {
-    initialVariables: {
-      first: PAGE_SIZE
-    },
 
     fragments: {
       viewer: () => Relay.QL`
         fragment on Viewer {
-          projets(first: $first) {
-            edges{
-              node {
-                id
-                name
-              }
-            }
-            totalCount
-            rangeBegin
-            rangeEnd
-            pageInfo {
-              hasNextPage
-            }
+          id
+          ${EmailLoginMutation.getFragment('viewer')}
+          ${MainScreen.getFragment('viewer')}
+          me {
+            _id
+            email
+            first_name
           }
         }
       `

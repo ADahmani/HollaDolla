@@ -1,6 +1,7 @@
 import invariant from 'invariant';
 import MainApp from '../components/app/main';
 import ProjetTypeView from '../components/projet/ProjetTypeView';
+import LoginScreen from '../components/login/LoginScreen';
 
 var routes = {
   START_SCREEN: {
@@ -10,6 +11,10 @@ var routes = {
   PROJET_ITEM: {
     title: 'ProjectItem',
     Component: ProjetTypeView,
+  },
+  LOGIN_SCREEN: {
+    title: 'Login',
+    Component: LoginScreen,
   },
 };
 

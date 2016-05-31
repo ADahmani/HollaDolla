@@ -5,9 +5,11 @@ const User = new mongoose.Schema({
   // Created time
   created: {type: Date, default: Date.now},
 
-  first_name: {type: String},
+  firstName: {type: String},
 
-  last_name: {type: String},
+  userName: {type: String},
+
+  lastName: {type: String},
 
   email: {type: String},
 

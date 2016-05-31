@@ -11,7 +11,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
+// import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
 
 
 var windowSize = Dimensions.get('window');
@@ -21,7 +21,10 @@ export default class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      firstName: '',
+      lastName: '',
+      userName: '',
+      email: '',
       password: ''
     }
   }
@@ -29,11 +32,7 @@ export default class LoginForm extends Component {
   login(){
     var email = this.state.email;
     var password = this.state.password;
-    this.props.app.login(email, password);
-  }
-
-  _goToSignup() {
-    this.props.app.navigate('SIGNUP_SCREEN')
+    this.props.app.signUp(this.state);
   }
 
 
@@ -41,29 +40,51 @@ export default class LoginForm extends Component {
     return (
         <View style={styles.container}>
             <Image style={styles.bg} source={{uri: 'http://i.imgur.com/xlQ56UK.jpg'}} />
-            <View style={styles.header}>
-                <Image style={styles.mark} source={{uri: 'http://i.imgur.com/da4G0Io.png'}} />
-            </View>
             <View style={styles.inputs}>
                 <View style={styles.inputContainer}>
-                    <Image style={styles.inputUsername} source={{uri: 'http://i.imgur.com/iVVVMRX.png'}}/>
                     <TextInput
-                        placeholder="Login"
-                        placeholderTextColor="#FFF"
-                        style={{color: '#fff'}}
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email}
+                      placeholder="First Name"
+                      placeholderTextColor="#FFF"
+                      style={{color: '#fff'}}
+                      onChangeText={(firstName) => this.setState({firstName})}
+                      value={this.state.firstName}
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Image style={styles.inputPassword} source={{uri: 'http://i.imgur.com/ON58SIG.png'}}/>
+                  <TextInput
+                    placeholder="Last Name"
+                    placeholderTextColor="#FFF"
+                    style={{color: '#fff'}}
+                    onChangeText={(lastName) => this.setState({lastName})}
+                    value={this.state.lastName}
+                  />
+                </View>
+                <View style={styles.inputContainer}>
                     <TextInput
-                        password={true}
-                        style={{color: '#fff'}}
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
-                        placeholder="Password"
-                        placeholderTextColor="#FFF"
+                      placeholder="Username"
+                      placeholderTextColor="#FFF"
+                      style={{color: '#fff'}}
+                      onChangeText={(userName) => this.setState({userName})}
+                      value={this.state.userName}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                      placeholder="Email"
+                      placeholderTextColor="#FFF"
+                      style={{color: '#fff'}}
+                      onChangeText={(email) => this.setState({email})}
+                      value={this.state.email}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                      password={true}
+                      placeholder="Password"
+                      placeholderTextColor="#FFF"
+                      style={{color: '#fff'}}
+                      onChangeText={(password) => this.setState({password})}
+                      value={this.state.password}
                     />
                 </View>
             </View>
@@ -71,18 +92,9 @@ export default class LoginForm extends Component {
               onPress={this.login.bind(this)}
             >
               <View style={styles.signin}>
-                  <Text style={styles.whiteFont}>Sign In</Text>
+                  <Text style={styles.whiteFont}>Sign Up</Text>
               </View>
             </TouchableOpacity>
-
-            <View style={styles.signup}>
-                <Text style={styles.greyFont}>
-                  Don't have an account?
-                    <Text
-                      onPress={this._goToSignup.bind(this)}
-                      style={styles.whiteFont}>  Sign Up</Text>
-                </Text>
-            </View>
         </View>
     );
   }

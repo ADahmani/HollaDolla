@@ -5,11 +5,14 @@ import _ from 'lodash';
 import Styles from './App.style.js';
 import getRoute from '../../ViewsRoutes/Routes';
 import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
+import SignUpMutation from '../../mutations/viewer/SignupMutation';
+
 import MainScreen from './main';
 import {
   View,
   Image,
   Navigator,
+  BackAndroid
 } from 'react-native';
 
 export class App extends Component {
@@ -19,6 +22,7 @@ export class App extends Component {
     relay: React.PropTypes.object,
   };
 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +31,14 @@ export class App extends Component {
       pushModalMessage: '',
       pushModalAdditionalData: '',
     };
+  }
+
+  componentDidMount() {
+    var self = this;
+    BackAndroid.addEventListener('hardwareBackPress', function() {
+       self.goToPrev();
+       return true;
+     });
   }
 
   showPushModal(body) {
@@ -47,17 +59,14 @@ export class App extends Component {
     });
   }
 
-  goToPrev(navigator) {
-    navigator.pop();
+  goToPrev() {
+    this.refs.navigator.pop();
   }
 
   _onLoginComplete() {
-    _.delay(() => {
-      console.log(this.props.viewer);
-      this.refs.navigator.resetTo(
-        getRoute('START_SCREEN')
-      );
-    }, 100);
+    this.refs.navigator.resetTo(
+      getRoute('START_SCREEN')
+    );
   }
 
   login(email, password) {
@@ -66,6 +75,30 @@ export class App extends Component {
         viewer: this.props.viewer,
         email: email,
         password: password
+      }),
+      {
+        onSuccess: (data) => {
+          // this.props.relay.forceFetch();
+          this._onLoginComplete();
+        },
+        onFailure: (err) => {
+          var error = err.getError() || new Error('Mutation failed.');
+          console.error(error);
+          this.setState({state: 'fucked'});
+        }
+      }
+    );
+  }
+
+  signUp(data) {
+    Relay.Store.commitUpdate(
+      new SignUpMutation({
+        viewer: this.props.viewer,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        userName: data.userName,
+        email: data.email,
+        password: data.password,
       }),
       {
         onSuccess: (data) => {
@@ -111,7 +144,7 @@ export class App extends Component {
   }
 
   navigate(route, attrs) {
-    this.refs.navigator.replace(getRoute(route, attrs));
+    this.refs.navigator.push(getRoute(route, attrs));
   }
 
   navigateToTop() {
@@ -128,7 +161,7 @@ export class App extends Component {
 
   render() {
     var initialRoute = this.props.viewer.me ? 'START_SCREEN' : 'LOGIN_SCREEN';
-    return (
+  return (
       <Navigator
         ref='navigator'
         initialRoute={getRoute(initialRoute)}
@@ -146,6 +179,7 @@ export var appRelay = (props) => {
         fragment on Viewer {
           id
           ${EmailLoginMutation.getFragment('viewer')}
+          ${SignUpMutation.getFragment('viewer')}
           ${MainScreen.getFragment('viewer')}
           me {
             _id

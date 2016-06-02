@@ -57,7 +57,7 @@ export default class ProjectItem extends Component {
     return (
 
       <View style={styles.projectItem}>
-        <Image style={{flex: 1, borderRadius: 20}} source={{uri: 'https://s-media-cache-ak0.pinimg.com/474x/8e/93/3c/8e933cff4e60d1b8f1dee34894c65d63.jpg'}}>
+        <Image style={{flex: 1, borderRadius: 20}} source={{uri: 'http://i.imgur.com/xlQ56UK.jpg'}}>
           <View style={styles.projectImg}>
             <View style={styles.Info}>
               <View style={styles.InfoIcon}>

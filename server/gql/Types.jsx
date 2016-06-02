@@ -1,6 +1,9 @@
 const types = [
+  require('./viewer/ViewerType'),
   require('./user/UserType'),
   require('./projets/ProjetType'),
+  require('./spendings/SpendingType'),
+  require('./spendings/SpenderType')
 ];
 
 var instanceMap = {};

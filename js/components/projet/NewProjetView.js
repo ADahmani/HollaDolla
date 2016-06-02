@@ -45,16 +45,13 @@ export default class LoginForm extends Component {
 
   _ajouter(){
     var viewer = this.props.viewer;
-    var city = this.state.name;
+    var city = this.state.city;
     var type = this.props.type;
-    var name = this.state.city;
-    console.log('before', this.state);
-
+    var name = this.state.name;
     var participants = this.state.participants;
     participants = _.map(participants, (participant) => {
       return participant.id;
     })
-    console.log('after', this.state);
     Relay.Store.commitUpdate(
       new CreateProjetMutation({
         viewer,

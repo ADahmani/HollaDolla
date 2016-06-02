@@ -20,7 +20,6 @@ var list = [
   {type: 'cadeau', name: 'Cadeau', image: require('../../imgs/projet-types/cadeau.png')},
   {type: 'evg', name: 'EVG', image: require('../../imgs/projet-types/evg.png')},
   {type: 'divers', name: 'Divers', image: require('../../imgs/projet-types/divers.png')},
-
 ];
 
 export default class ProjetTypeView extends Component {
@@ -71,7 +70,6 @@ export default class ProjetTypeView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.props.type}</Text>
           <ListView
             contentContainerStyle={styles.list}
             dataSource={this.state.dataSource}

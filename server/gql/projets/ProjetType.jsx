@@ -2,7 +2,7 @@ import Interface from '../NodeInterface';
 var {nodeInterface, globalIdField} = Interface;
 import {getProjection} from '../Util';
 import {resolveSingleById} from '../resolveHelper';
-
+import SpendingConnection from '../spendings/SpendingConnection';
 import OwnerType, {resolveMulti as resolveUsers} from './ProjetOwnerType';
 
 import {
@@ -33,7 +33,8 @@ export default new GraphQLObjectType({
       type: new GraphQLList(OwnerType),
       description: 'Projet Type',
       resolve: projet => resolveUsers({ids: projet.participants})
-    }
+    },
+    spendings: SpendingConnection
   }),
   interfaces: [nodeInterface]
 });

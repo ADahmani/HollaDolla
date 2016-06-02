@@ -21,7 +21,7 @@ class HollaDolla extends Component {
     var projectsEdges = me.projets && me.projets.edges;
     return (
       <View style={styles.main} >
-        <NavBar />
+        <NavBar {...this.props} />
         <ProjectsListing {...this.props} edges={projectsEdges} />
         <HomeFooter {...this.props} />
       </View>
@@ -51,6 +51,7 @@ export default Relay.createContainer(HollaDolla, {
           _id
           email
           first_name
+          friends
           projets(first: $first) {
             edges{
               node {

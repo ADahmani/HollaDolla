@@ -22,12 +22,19 @@ export default class EmailLogin extends Relay.Mutation {
             _id
             email
             first_name
+            friends
             projets(first: 10) {
-              edges {
+              edges{
                 node {
                   id
                   name
                 }
+              }
+              totalCount
+              rangeBegin
+              rangeEnd
+              pageInfo {
+                hasNextPage
               }
             }
           }
@@ -54,12 +61,19 @@ export default class EmailLogin extends Relay.Mutation {
           _id
           email
           first_name
-          projets(first: 10) {
-            edges {
+          friends
+          projets(first: 100) {
+            edges{
               node {
                 id
                 name
               }
+            }
+            totalCount
+            rangeBegin
+            rangeEnd
+            pageInfo {
+              hasNextPage
             }
           }
         }

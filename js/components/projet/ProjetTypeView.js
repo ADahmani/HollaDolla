@@ -16,7 +16,7 @@ var list = [
   {type: 'weekend', name: 'Weekend', image: require('../../imgs/projet-types/weekend.jpg')},
   {type: 'soiree', name: 'Soirée', image: require('../../imgs/projet-types/soiree.png')},
   {type: 'restaurant', name: 'Restaurant', image: require('../../imgs/projet-types/restaurant.png')},
-  {type: 'colocation', name: 'Colocation', image: require('../../imgs/projet-types/vacances.jpg')},
+  {type: 'colocation', name: 'Colocation', image: require('../../imgs/projet-types/colocation.png')},
   {type: 'cadeau', name: 'Cadeau', image: require('../../imgs/projet-types/cadeau.png')},
   {type: 'evg', name: 'EVG', image: require('../../imgs/projet-types/evg.png')},
   {type: 'divers', name: 'Divers', image: require('../../imgs/projet-types/divers.png')},
@@ -43,14 +43,13 @@ export default class ProjetTypeView extends Component {
       dataSource:this.state.dataSource.cloneWithRows(this.state.ds),
     })
   }
-
   calculatedSize() {
    var size = this.state.currentScreenWidth / 2
    return {width: size, height: size}
   }
 
   _SelectType(type) {
-    this.props.app.navigate('PROJET_ITEM', {type})
+    this.props.app.navigate('NEW_PROJET', {type})
   }
 
   renderData(data, sectionID, rowID, highlightRow){

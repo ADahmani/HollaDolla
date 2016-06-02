@@ -13,6 +13,8 @@ const User = new mongoose.Schema({
 
   email: {type: String},
 
+  friends: {type: [String]},
+
   password: {type: String}
 
 });

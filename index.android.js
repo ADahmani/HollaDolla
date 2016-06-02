@@ -10,15 +10,23 @@ import {appRelay} from 'HollaDollaApp/js/components/app/App';
 import ViewerRoute from 'HollaDollaApp/js/routes/ViewerRoute';
 
 Relay.injectNetworkLayer(
-  // new Relay.DefaultNetworkLayer('http://192.168.1.10:3333/graphql'),{
-  //   credentials: 'include'
-  // }
-
-  new Relay.DefaultNetworkLayer('http://192.168.0.16:3333/graphql'),{
+  //Achraf's house
+  new Relay.DefaultNetworkLayer('http://192.168.1.10:3333/graphql'),{
     credentials: 'include'
   }
 
+  //seb's house
+  // new Relay.DefaultNetworkLayer('http://192.168.0.16:3333/graphql'),{
+  //   credentials: 'include'
+  // }
+
+  //seb's Iphone
   // new Relay.DefaultNetworkLayer('http://172.20.10.3:3333/graphql'), {
+  //   credentials: 'include'
+  // }
+
+  // My Android
+  // new Relay.DefaultNetworkLayer('http://192.168.43.119:3333/graphql'), {
   //   credentials: 'include'
   // }
 
@@ -37,7 +45,6 @@ class HollaDolla extends Component {
         <Relay.RootContainer
            Component={appRelay(this.props)}
            route={viewerRoute}
-           forceFetch={true}
         />
     );
   }

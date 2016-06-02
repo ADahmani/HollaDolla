@@ -4,6 +4,7 @@ import ProjetTypeView from '../components/projet/ProjetTypeView';
 import LoginScreen from '../components/login/LoginScreen';
 import NewProjetScreen from '../components/projet/NewProjetView';
 import SignUpScreen from '../components/signup/SignUpScreen';
+import AddfriendScreen from '../components/options/AddFriendScreen';
 
 
 var routes = {
@@ -26,6 +27,10 @@ var routes = {
   SIGNUP_SCREEN: {
     title: 'Sign up',
     Component: SignUpScreen,
+  },
+  ADDFRIEND_SCREEN: {
+    title: 'Add friend',
+    Component: AddfriendScreen,
   },
 };
 

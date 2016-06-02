@@ -6,6 +6,8 @@ import Styles from './App.style.js';
 import getRoute from '../../ViewsRoutes/Routes';
 import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
 import SignUpMutation from '../../mutations/viewer/SignupMutation';
+import AddFriendMutation from '../../mutations/user/AddFriendMutation';
+import CreateProjetMutation from '../../mutations/projet/CreateProjetMutation';
 
 import MainScreen from './main';
 import {
@@ -36,8 +38,10 @@ export class App extends Component {
   componentDidMount() {
     var self = this;
     BackAndroid.addEventListener('hardwareBackPress', function() {
-       self.goToPrev();
-       return true;
+       if (self.refs.navigator.getCurrentRoutes().length !== 1){
+         self.goToPrev();
+         return true;
+       } else return false;
      });
   }
 
@@ -79,6 +83,7 @@ export class App extends Component {
       {
         onSuccess: (data) => {
           // this.props.relay.forceFetch();
+          console.log(data, "boooom");
           this._onLoginComplete();
         },
         onFailure: (err) => {
@@ -181,10 +186,14 @@ export var appRelay = (props) => {
           ${EmailLoginMutation.getFragment('viewer')}
           ${SignUpMutation.getFragment('viewer')}
           ${MainScreen.getFragment('viewer')}
+          ${CreateProjetMutation.getFragment('viewer')}
           me {
+            id
+            ${AddFriendMutation.getFragment('user')}
             _id
             email
             first_name
+            friends
           }
         }
       `

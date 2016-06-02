@@ -3,8 +3,6 @@ var {nodeInterface, globalIdField} = Interface;
 import {getProjection} from '../Util';
 import {resolveSingleById, resolveMultiByQuery} from '../resolveHelper';
 
-// import FriendType, {resolveMulti as resolveFriends} from './FriendType';
-
 import {
   GraphQLObjectType,
   GraphQLNonNull,
@@ -12,35 +10,27 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import ProjetConnection from '../projets/projetConnection';
-
 export default new GraphQLObjectType({
-  name: 'User',
-  description: 'Un User',
+  name: 'Friend',
+  description: 'Un Friend',
   fields: () => ({
-    id: globalIdField('User', (parent) => parent._id),
+    id: globalIdField('Friend', (parent) => parent._id),
     _id: {
       type: new GraphQLNonNull(GraphQLString),
       description: 'The id'
     },
     first_name: {
       type: GraphQLString,
-      description: 'User first name'
+      description: 'Friend first name'
     },
     last_name: {
       type: GraphQLString,
-      description: 'User last name'
+      description: 'Friend last name'
     },
     email: {
       type: GraphQLString,
-      description: 'User email'
-    },
-    friends: {
-      type: new GraphQLList(GraphQLString),
-      description: 'Friends list'
-      // resolve: me => resolveFriends({ids: me.friends})
-    },
-    projets: ProjetConnection
+      description: 'Friend email'
+    }
   }),
   interfaces: [nodeInterface]
 });

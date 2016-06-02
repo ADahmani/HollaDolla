@@ -24,6 +24,7 @@ export default new GraphQLObjectType({
         console.log('authedUserauthedUserauthedUserauthedUserauthedUser');
         console.log(authedUser);
         return resolveUser(authedUser._id.toString(), info);
+        // return resolveUser("57479043e902582c15a1b266", info);
       },
     },
   }),

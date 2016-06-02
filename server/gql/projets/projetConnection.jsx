@@ -10,15 +10,14 @@ import {
 
 function resolveProjetsConnection(parent, args, info) {
   var query = {};
-  // filtring
-  console.log("///////////");
   var authedUser = info.rootValue.authedUser;
-  console.log(authedUser);
-  query.participants = authedUser._id.toString();;
+  query.$or = [
+    {participants: authedUser._id.toString()},
+    {owner: authedUser._id.toString()}
+  ];
+
   console.log("///////////");
 
-
-  console.log('query', query);
   args.filter = args.filter || {};
 
   const filter = args.filter || {};
@@ -31,7 +30,7 @@ function resolveProjetsConnection(parent, args, info) {
     query.state = state;
   }
 
-  var sortQuery = {created: 1};
+  var sortQuery = {created: -1};
 
   return offsetPaginator('Projet', query, sortQuery, args, info);
 }
@@ -45,24 +44,6 @@ function resolveProjetsConnection(parent, args, info) {
 
 
 const Connection = createConnection('Projets', ProjetType);
-
-// var backwardConnectionArgs = {
-//   before: {
-//     type: GraphQLString
-//   },
-//   last: {
-//     type: GraphQLInt
-//   }
-// };
-//
-// var forwardConnectionArgs = {
-//   after: {
-//     type: GraphQLString
-//   },
-//   first: {
-//     type: GraphQLInt
-//   }
-// };
 
 export default {
   type: Connection.connectionType,

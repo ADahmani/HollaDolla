@@ -5,10 +5,17 @@ export default function(authedUser, data) {
 
   var {
     name,
+    city,
+    type,
+    participants
   } = data;
 
   var projet = new Projet({
-    name
+    name,
+    city,
+    type,
+    participants,
+    owner: authedUser._id
   });
 
   console.log(projet);

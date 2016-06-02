@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Interface from '../NodeInterface';
 var {nodeInterface, globalIdField} = Interface;
 import {getProjection} from '../Util';

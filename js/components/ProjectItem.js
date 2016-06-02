@@ -36,7 +36,7 @@ export default class ProjectItem extends Component {
     var restaurant = (<MaterialIcons name='flight' size={50} color='#fff' />)
     var ajouterDepense = (
       <MaterialIcons.Button
-        style={{flex: 1, backgroundColor: '#5FD89B'}}
+        style={{flex: 1, backgroundColor: '#FF3366'}}
         name='add'
         size={20}
         color='#fff'
@@ -45,7 +45,7 @@ export default class ProjectItem extends Component {
     </MaterialIcons.Button>)
     var Summary = (
       <MaterialIcons.Button
-        style={{flex: 1, backgroundColor: '#09C0E0'}}
+        style={{flex: 1, backgroundColor: '#FE0040'}}
         name='visibility'
         size={20}
         color='#fff'

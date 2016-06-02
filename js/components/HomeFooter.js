@@ -14,7 +14,7 @@ export default class HomeFooter extends Component {
   }
 
   goToSummary() {
-    this.props.app.navigate('PROJET_ITEM')
+    this.props.app.navigateReplace('PROJET_ITEM')
   }
 
   render() {
@@ -36,14 +36,14 @@ export default class HomeFooter extends Component {
 const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
-    backgroundColor: '#1FB0E6',
+    backgroundColor: '#FF3366',
     height: 60,
   },
   footerButton: {
     flex: 1,
     padding: 20,
     alignItems: 'center',
-    backgroundColor: '#1FB0E6'
+    backgroundColor: '#FF3366'
   },
   footerText: {
     color: '#fff',

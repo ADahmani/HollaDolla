@@ -1,4 +1,4 @@
-import ViewerType, {resolveSingle} from '../../viewer/ViewerType';
+import ProjetType, {resolveSingle} from '../../projets/ProjetType';
 import {mutationWithClientMutationId, fromGlobalId} from 'graphql-relay';
 import createSpending from '../../../models/spending/actions/createSpending';
 import {edgeType as SpendingEdgeType} from '../SpendingConnection';
@@ -13,11 +13,8 @@ export default mutationWithClientMutationId({
   name: 'CreateSpending',
 
   inputFields: {
-    from: {
-      type: GraphQLString,
-    },
     to: {
-      type: GraphQLString,
+      type: new GraphQLList(GraphQLString),
     },
     amount: {
       type: GraphQLString,
@@ -28,24 +25,16 @@ export default mutationWithClientMutationId({
   },
 
   outputFields: {
-    viewer: {
-      type: ViewerType,
-      resolve: resolveSingle,
-    },
-    spendingEdge: {
-      type: SpendingEdgeType,
-      resolve: node => ({
-        node,
-        cursor: dateToCursor(node.created)
-      })
+    projet: {
+      type: ProjetType,
+      resolve: projet => resolveSingle(projet),
     }
   },
 
   mutateAndGetPayload: (data, info) => {
     const me = info.rootValue.authedUser;
-    console.log('daaaataa', data);
-    return createSpending(me, data).then((spending) => {
-      return spending;
-    });
+    data.from = me._id;
+    createSpending(me, data);
+    return {_id: data.projet};
   }
 });

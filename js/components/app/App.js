@@ -8,6 +8,7 @@ import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
 import SignUpMutation from '../../mutations/viewer/SignupMutation';
 import AddFriendMutation from '../../mutations/user/AddFriendMutation';
 import CreateProjetMutation from '../../mutations/projet/CreateProjetMutation';
+import CreateSpendingMutation from '../../mutations/projet/CreateSpendingMutation';
 
 import MainScreen from './main';
 import {
@@ -23,7 +24,6 @@ export class App extends Component {
     viewer: React.PropTypes.object,
     relay: React.PropTypes.object,
   };
-
 
   constructor(props) {
     super(props);
@@ -194,6 +194,47 @@ export var appRelay = (props) => {
             email
             first_name
             friends
+            projets(first: 100) {
+              edges{
+                node {
+                  ${CreateSpendingMutation.getFragment('projet')}
+                  _id
+                  id
+                  name
+                  type
+                  city
+                  totalSpendings
+                  participants {
+                    id
+                    _id
+                    first_name
+                  }
+                  spendings(first: 100) {
+                    edges {
+                      node {
+                        _id
+                        projet
+                        from {
+                          _id
+                          first_name
+                        }
+                        to {
+                          _id
+                          first_name
+                        }
+                        amount
+                      }
+                    }
+                  }
+                }
+              }
+              totalCount
+              rangeBegin
+              rangeEnd
+              pageInfo {
+                hasNextPage
+              }
+            }
           }
         }
       `

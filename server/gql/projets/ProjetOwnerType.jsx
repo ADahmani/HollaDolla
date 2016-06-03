@@ -40,5 +40,6 @@ export function resolveSingle(id, info) {
 }
 
 export function resolveMulti(ids, info) {
-  return resolveMultiByQuery('User', 'User', ids, getProjection(info));
-}
+  return resolveMultiByQuery(
+    'User', 'User', {_id: {$in: ids}}, getProjection(info)
+  );}

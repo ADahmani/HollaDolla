@@ -14,7 +14,7 @@ export default class HomeFooter extends Component {
   }
 
   goToSummary() {
-    this.props.app.navigateReplace('PROJET_ITEM')
+    this.props.app.navigateReplace('NEW_PROJET_TYPE')
   }
 
   render() {

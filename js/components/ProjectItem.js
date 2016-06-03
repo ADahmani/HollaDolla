@@ -13,6 +13,18 @@ var ScrollableTabView = require('react-native-scrollable-tab-view');
 var MaterialIcons = require('react-native-vector-icons/MaterialIcons');
 var Ionicons = require('react-native-vector-icons/Ionicons');
 
+var types = {
+  vacances : {name: 'Vacances', image: require('../imgs/vacances.png')},
+  weekend : {name: 'Weekend', image: require('../imgs/weekend.png')},
+  soiree : {name: 'Soirée', image: require('../imgs/soiree.png')},
+  restaurant : {name: 'Restaurant', image: require('../imgs/restaurant.png')},
+  colocation : {name: 'Colocation', image: require('../imgs/colocation.png')},
+  cadeau : {name: 'Cadeau', image: require('../imgs/cadeau.png')},
+  evg : {name: 'EVG', image: require('../imgs/evg.png')},
+  divers : {name: 'Divers', image: require('../imgs/divers.png')},
+};
+
+
 class HelloMessage extends Component {
   constructor(props){
     super(props);
@@ -24,10 +36,13 @@ class HelloMessage extends Component {
 
 export default class ProjectItem extends Component {
 
-  goToSummary() {
-    this.props.app.navigate('PROJET_ITEM')
+  goToSummary(project) {
+    this.props.app.navigateReplace('PROJET_SUMMARY', {project});
   }
 
+  AddExpense(project) {
+    this.props.app.navigate('NEW_SPENDING', {project})
+  }
 
   render() {
     var project = this.props.project;
@@ -40,8 +55,9 @@ export default class ProjectItem extends Component {
         name='add'
         size={20}
         color='#fff'
+        onPress={this.AddExpense.bind(this, project)}
       >
-      Add Expense
+      Ajouter Depense
     </MaterialIcons.Button>)
     var Summary = (
       <MaterialIcons.Button
@@ -49,25 +65,25 @@ export default class ProjectItem extends Component {
         name='visibility'
         size={20}
         color='#fff'
-        onPress={this.goToSummary.bind(this)}
+        onPress={this.goToSummary.bind(this, project)}
       >
-      View Summary
+      Vue Globale
     </MaterialIcons.Button>)
-
     return (
-
       <View style={styles.projectItem}>
         <Image style={{flex: 1, borderRadius: 20}} source={{uri: 'http://i.imgur.com/xlQ56UK.jpg'}}>
           <View style={styles.projectImg}>
             <View style={styles.Info}>
               <View style={styles.InfoIcon}>
-                  <Text style={styles.text}>{flightIcon}</Text>
+              <Image
+               source={types[project.type].image}
+               style={styles.typebox}></Image>
               </View>
               <View style={styles.InfoName}>
                 <Text style={styles.text}>{project.name.toUpperCase()}</Text>
               </View>
               <View style={styles.InfoSpendings}>
-              <Text style={styles.text}>65$</Text>
+              <Text style={styles.text}>{project.totalSpendings}€</Text>
               </View>
             </View>
           </View>
@@ -134,5 +150,9 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 1, height: 1},
     fontFamily: 'light'
   },
+  typebox: {
+    width: 100,
+    height: 100
+  }
 
 });

@@ -39,14 +39,16 @@ passport.deserializeUser(function(id, done) {
   );
 });
 
-app.use('/graphql',graphqlHTTP((req) => ({
+app.use('/graphql',graphqlHTTP((req) => {
+  console.log(req.body);
+  return ({
   schema: RootSchema,
   graphiql: true,
   rootValue: {
     authedUser: req.user,
     req
   }
-})));
+})}));
 
 let server = app.listen(PORT, function () {
   let host = server.address().address;

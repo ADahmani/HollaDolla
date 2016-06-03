@@ -4,6 +4,7 @@ import {getProjection} from '../Util';
 import {resolveSingleById} from '../resolveHelper';
 import SpendingConnection from '../spendings/SpendingConnection';
 import OwnerType, {resolveMulti as resolveUsers} from './ProjetOwnerType';
+import _ from 'lodash';
 
 import {
   GraphQLObjectType,
@@ -29,12 +30,27 @@ export default new GraphQLObjectType({
       type: GraphQLString,
       description: 'Projet Type'
     },
+    city: {
+      type: GraphQLString,
+      description: 'Projet Type'
+    },
     participants: {
       type: new GraphQLList(OwnerType),
       description: 'Projet Type',
-      resolve: projet => resolveUsers({ids: projet.participants})
+      resolve: (projet, args, context, info) => resolveUsers(projet.participants, info)
+        .then(users => {
+          return _.map(users, user => {
+            user._typeName = 'ProjetOwner';
+            console.log(user);
+            return user;
+          })
+        })
     },
-    spendings: SpendingConnection
+    totalSpendings: {
+      type: GraphQLString,
+      description: 'total spendings'
+    },
+    spendings: SpendingConnection,
   }),
   interfaces: [nodeInterface]
 });

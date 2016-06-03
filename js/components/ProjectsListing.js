@@ -22,19 +22,14 @@ class HelloMessage extends Component {
 }
 
 export default class ProjectsListing extends Component {
+
   render() {
     var projects = this.props.edges;
     var {height, width} = Dimensions.get('window');
-    console.log(projects);
-
 
     return (
-
       <ScrollableTabView renderTabBar={() => <HelloMessage />}>
-
-
-      {_.map(projects, (p) => <ProjectItem app={this.props.app} navigator={this.props.navigator} key={p.id} project={p.node} />)}
-
+        {_.map(projects, (p) => <ProjectItem app={this.props.app} navigator={this.props.navigator} key={p.id} project={p.node} />)}
       </ScrollableTabView>
     );
   }

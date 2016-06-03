@@ -1,7 +1,7 @@
 import Relay from 'react-relay';
 import React, { Component } from 'react';
 import ViewerRoute from '../../routes/ViewerRoute';
-
+import CreateSpendingMutation from '../../mutations/projet/CreateSpendingMutation';
 import {
   StyleSheet,
   Text,
@@ -55,8 +55,35 @@ export default Relay.createContainer(HollaDolla, {
           projets(first: $first) {
             edges{
               node {
+                ${CreateSpendingMutation.getFragment('projet')}
+                _id
                 id
                 name
+                type
+                city
+                totalSpendings
+                participants {
+                  id
+                  _id
+                  first_name
+                }
+                spendings(first: 100) {
+                  edges {
+                    node {
+                      _id
+                      projet
+                      from {
+                        _id
+                        first_name
+                      }
+                      to {
+                        _id
+                        first_name
+                      }
+                      amount
+                    }
+                  }
+                }
               }
             }
             totalCount

@@ -91,6 +91,29 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "projet",
+              "description": null,
+              "args": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Projet",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -511,6 +534,18 @@
               "deprecationReason": null
             },
             {
+              "name": "city",
+              "description": "Projet Type",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "participants",
               "description": "Projet Type",
               "args": [],
@@ -522,6 +557,18 @@
                   "name": "ProjetOwner",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalSpendings",
+              "description": "total spendings",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1645,22 +1692,16 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "from",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "to",
               "description": null,
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "defaultValue": null
             },
@@ -1709,24 +1750,12 @@
           "description": null,
           "fields": [
             {
-              "name": "viewer",
+              "name": "projet",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "Viewer",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "spendingEdge",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "SpendingsEdge",
+                "name": "Projet",
                 "ofType": null
               },
               "isDeprecated": false,

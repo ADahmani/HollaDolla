@@ -18,7 +18,7 @@ export default class NavBar extends Component {
     return (
       <View>
         <View style={styles.toolbar}>
-            <Text style={styles.toolbarTitle}>Projects</Text>
+            <Text style={styles.toolbarTitle}>Projets</Text>
             <TouchableHighlight onPress={this._goToOptions.bind(this)}>
             <Image
               style={styles.gearIcon}

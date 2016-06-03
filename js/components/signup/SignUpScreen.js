@@ -43,7 +43,7 @@ export default class LoginForm extends Component {
             <View style={styles.inputs}>
                 <View style={styles.inputContainer}>
                     <TextInput
-                      placeholder="First Name"
+                      placeholder="Prenom"
                       placeholderTextColor="#FFF"
                       style={{color: '#fff'}}
                       onChangeText={(firstName) => this.setState({firstName})}
@@ -52,7 +52,7 @@ export default class LoginForm extends Component {
                 </View>
                 <View style={styles.inputContainer}>
                   <TextInput
-                    placeholder="Last Name"
+                    placeholder="Nom"
                     placeholderTextColor="#FFF"
                     style={{color: '#fff'}}
                     onChangeText={(lastName) => this.setState({lastName})}
@@ -61,7 +61,7 @@ export default class LoginForm extends Component {
                 </View>
                 <View style={styles.inputContainer}>
                     <TextInput
-                      placeholder="Username"
+                      placeholder="Pseudo"
                       placeholderTextColor="#FFF"
                       style={{color: '#fff'}}
                       onChangeText={(userName) => this.setState({userName})}
@@ -80,7 +80,7 @@ export default class LoginForm extends Component {
                 <View style={styles.inputContainer}>
                     <TextInput
                       password={true}
-                      placeholder="Password"
+                      placeholder="Mot de Passe"
                       placeholderTextColor="#FFF"
                       style={{color: '#fff'}}
                       onChangeText={(password) => this.setState({password})}
@@ -92,7 +92,7 @@ export default class LoginForm extends Component {
               onPress={this.login.bind(this)}
             >
               <View style={styles.signin}>
-                  <Text style={styles.whiteFont}>Sign Up</Text>
+                  <Text style={styles.whiteFont}>Inscription</Text>
               </View>
             </TouchableOpacity>
         </View>

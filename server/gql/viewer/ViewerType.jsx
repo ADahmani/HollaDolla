@@ -2,7 +2,7 @@ import Interface from '../NodeInterface';
 var {nodeInterface, globalIdField} = Interface;
 import UserType, {resolveSingle as resolveUser} from '../user/UserType';
 import loginEmail from '../../models/user/actions/emailLogin'
-
+import ProjetType, {resolveSingle as resolveProjet} from '../projets/ProjetType';
 import {
   GraphQLObjectType,
   GraphQLString
@@ -26,6 +26,17 @@ export default new GraphQLObjectType({
         return resolveUser(authedUser._id.toString(), info);
         // return resolveUser("57479043e902582c15a1b266", info);
       },
+    },
+    projet: {
+      type: ProjetType,
+      args: {
+        id: {
+          name: 'id',
+          type: GraphQLString
+        },
+      },
+      resolve: (root, {id}, info) =>
+        resolveProjet(id, info)
     },
   }),
   interfaces: [nodeInterface],

@@ -62,7 +62,7 @@ export default class LoginForm extends Component {
                         style={{color: '#fff'}}
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
-                        placeholder="Password"
+                        placeholder="Mot de Passe"
                         placeholderTextColor="#FFF"
                     />
                 </View>
@@ -71,16 +71,16 @@ export default class LoginForm extends Component {
               onPress={this.login.bind(this)}
             >
               <View style={styles.signin}>
-                  <Text style={styles.whiteFont}>Sign In</Text>
+                  <Text style={styles.whiteFont}>Connnexion</Text>
               </View>
             </TouchableOpacity>
 
             <View style={styles.signup}>
                 <Text style={styles.greyFont}>
-                  Don't have an account?
+                  Pas encore inscrit ?
                     <Text
                       onPress={this._goToSignup.bind(this)}
-                      style={styles.whiteFont}>  Sign Up</Text>
+                      style={styles.whiteFont}> Créer un Compte !</Text>
                 </Text>
             </View>
         </View>

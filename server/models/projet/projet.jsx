@@ -22,7 +22,7 @@ const Projet = new mongoose.Schema({
   participants: {type: [String]},
 
   // total spendings of projet
-  spendings: {type: String, default: '0'},
+  totalSpendings: {type: String, default: '0'},
 
   // celui qui a crée le projet
   owner: {type: String},

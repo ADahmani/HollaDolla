@@ -56,9 +56,15 @@ class Select extends Component {
     optionListRef()._show(children, this.pageX, this.pageY, width, height, (item, value=item) => {
       if (item) {
         onSelect(value);
-        this.setState({
-          value: item
-        });
+        if (this.props.dynamique) {
+          this.setState({
+            value: 'En Ajouter plus'
+          });
+        } else {
+          this.setState({
+            value: item
+          });
+        }
       }
     });
   }
@@ -81,7 +87,8 @@ Select.propTypes = {
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   optionListRef: React.PropTypes.func.isRequired,
-  onSelect: React.PropTypes.func
+  onSelect: React.PropTypes.func,
+  dynamique: React.PropTypes.bool,
 };
 
 Select.defaultProps = {

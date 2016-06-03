@@ -26,8 +26,34 @@ export default class EmailLogin extends Relay.Mutation {
             projets(first: 10) {
               edges{
                 node {
+                  _id
                   id
                   name
+                  type
+                  city
+                  totalSpendings
+                  participants {
+                    id
+                    _id
+                    first_name
+                  }
+                  spendings(first: 100) {
+                    edges {
+                      node {
+                        _id
+                        projet
+                        from {
+                          _id
+                          first_name
+                        }
+                        to {
+                          _id
+                          first_name
+                        }
+                        amount
+                      }
+                    }
+                  }
                 }
               }
               totalCount
@@ -65,8 +91,34 @@ export default class EmailLogin extends Relay.Mutation {
           projets(first: 100) {
             edges{
               node {
+                _id
                 id
                 name
+                type
+                city
+                totalSpendings
+                participants {
+                  id
+                  _id
+                  first_name
+                }
+                spendings(first: 100) {
+                  edges {
+                    node {
+                      _id
+                      projet
+                      from {
+                        _id
+                        first_name
+                      }
+                      to {
+                        _id
+                        first_name
+                      }
+                      amount
+                    }
+                  }
+                }
               }
             }
             totalCount

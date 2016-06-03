@@ -5,6 +5,8 @@ import LoginScreen from '../components/login/LoginScreen';
 import NewProjetScreen from '../components/projet/NewProjetView';
 import SignUpScreen from '../components/signup/SignUpScreen';
 import AddfriendScreen from '../components/options/AddFriendScreen';
+import ProjetSummaryView from '../components/projet/ProjetSummaryView'
+import NewSpending from '../components/projet/NewSpending';
 
 
 var routes = {
@@ -12,9 +14,17 @@ var routes = {
     title: 'Main',
     Component: MainApp,
   },
-  PROJET_ITEM: {
-    title: 'Projet details',
+  NEW_PROJET_TYPE: {
+    title: 'new projet type',
     Component: ProjetTypeView,
+  },
+  NEW_SPENDING: {
+    title: 'new spending',
+    Component: NewSpending,
+  },
+  PROJET_SUMMARY: {
+    title: 'projet summary',
+    Component: ProjetSummaryView,
   },
   LOGIN_SCREEN: {
     title: 'Login',

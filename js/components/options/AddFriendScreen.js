@@ -12,8 +12,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-// import EmailLoginMutation from '../../mutations/viewer/EmailLoginMutation';
-
 
 var windowSize = Dimensions.get('window');
 
@@ -21,7 +19,6 @@ export default class AddFriendScreen extends Component {
 
   constructor(props) {
     super(props);
-    console.log('Addfriend', this.props);
     this.state = {
       email: ''
     }
@@ -36,12 +33,11 @@ export default class AddFriendScreen extends Component {
       }),
       {
         onSuccess: (data) => {
-          this.props.relay.forceFetch();
+          this.props.app.goToPrev();
         },
         onFailure: (err) => {
           var error = err.getError() || new Error('Mutation failed.');
           console.error(error);
-          this.setState({state: 'fucked'});
         }
       }
     );
@@ -67,7 +63,7 @@ export default class AddFriendScreen extends Component {
               onPress={this._addFriend.bind(this)}
             >
               <View style={styles.signin}>
-                  <Text style={styles.whiteFont}>Add friend</Text>
+                  <Text style={styles.whiteFont}>Ajouter En Ami</Text>
               </View>
             </TouchableOpacity>
         </View>

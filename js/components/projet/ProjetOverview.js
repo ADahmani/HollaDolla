@@ -17,9 +17,7 @@ import {
 } from '../core/selectme';
 var {width, height} = Dimensions.get('window');
 
-import CreateProjetMutation from '../../mutations/projet/CreateProjetMutation';
 
-var windowSize = Dimensions.get('window');
 var types = {
   vacances : {name: 'Vacances', image: require('../../imgs/projet-types/vacances.jpg')},
   weekend : {name: 'Weekend', image: require('../../imgs/projet-types/weekend.jpg')},
@@ -31,11 +29,10 @@ var types = {
   divers : {name: 'Divers', image: require('../../imgs/projet-types/divers.png')},
 };
 
-export default class NewProjetView extends Component {
+export default class ProjetOverview extends Component {
 
   constructor(props) {
     super(props);
-    console.log('NEW', props);
     this.state = {
       name: '',
       city: '',
@@ -43,36 +40,8 @@ export default class NewProjetView extends Component {
     }
   }
 
-  _ajouter(){
-    var viewer = this.props.viewer;
-    var city = this.state.city;
-    var type = this.props.type;
-    var name = this.state.name;
-    var participants = this.state.participants;
-    participants = _.map(participants, (participant) => {
-      return participant.id;
-    })
-    Relay.Store.commitUpdate(
-      new CreateProjetMutation({
-        viewer,
-        participants,
-        name,
-        type,
-        city
-      }),
-      {
-        onSuccess: (data) => {
-          this.props.relay.forceFetch();
-          console.log(this.props.viewer, "boooom");
-          this.props.app.navigateReplace('START_SCREEN');
-        },
-        onFailure: (err) => {
-          var error = err.getError() || new Error('Mutation failed.');
-          console.error(error);
-          this.setState({state: 'fucked'});
-        }
-      }
-    );
+  _ajouter(project) {
+    this.props.app.navigate('NEW_SPENDING', {project})
   }
 
   _getOptionList() {
@@ -92,58 +61,22 @@ export default class NewProjetView extends Component {
   render() {
     var viewer = this.props.viewer || {};
     var me = viewer.me || {};
+    var projet = this.props.projet || {};
+    console.log(projet);
     var friends = me.friends || [];
     return (
         <View style={styles.container}>
             <Image style={styles.bg} source={{uri: 'http://i.imgur.com/xlQ56UK.jpg'}} />
-            <View style={styles.typebox}>
-              <Image
-               source={types[this.props.type].image}
-               style={styles.typebox}>
-                <View style={[styles.backdropText, styles.typebox]}>
-                  <Text style={[styles.headline, styles.typebox]} >{types[this.props.type].name}</Text>
-                </View>
-               </Image>
-          </View>
+            <View>
+              <Image style={[width, {height: 120} ]} source={{uri: `http://maps.google.com/maps/api/staticmap?center=${projet.city}&zoom=15&size=600x600&sensor=false`}}/>
+            </View>
             <View style={styles.inputs}>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                      placeholder='Nom de projet'
-                      placeholderTextColor="#FFF"
-                      style={{color: '#fff', textAlign: 'center'}}
-                      onChangeText={(name) => this.setState({name})}
-                      value={this.state.name}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                      placeholder="Ville"
-                      placeholderTextColor="#FFF"
-                      style={{color: '#fff', textAlign: 'center'}}
-                      onChangeText={(city) => this.setState({city})}
-                      value={this.state.city}
-                    />
-                </View>
+
                 <View style={[styles.inputContainer, {flex: 4}]}>
                 <Text style={{color: '#fff'}} >Participants</Text>
-                    <View style={styles.participantList}>
-                      <Select
-                        width={150}
-                        ref="SELECT1"
-                        dynamique={true}
-                        onSelect={this._canada.bind(this)}
-                        styleText={{color: '#fff'}}
-                        optionListRef={this._getOptionList.bind(this)}
-                        defaultValue="+">
-                        {_.map(friends, friend => {
-                          friend = friend.split(';');
-                          return <Option value = {{ami : friend}}>{friend[1]}</Option>
-                        } )}
-                      </Select>
-                    </View>
                     <View style={{flex: 1, flexDirection:'row'}}>
 
-                    {_.map(this.state.participants, participant => {
+                    {_.map(projet.participants, participant => {
                       console.log('participant', participant);
                       if (!participant) {
                         <View style={styles.circle}>
@@ -155,7 +88,7 @@ export default class NewProjetView extends Component {
                       return (
                         <View style={styles.circle}>
                           <Text style={styles.initials}>
-                            {participant.name}
+                            {participant.first_name.substring(0,2).toUpperCase()}
                           </Text>
                         </View>
                       )
@@ -164,10 +97,10 @@ export default class NewProjetView extends Component {
                 </View>
             </View>
             <TouchableOpacity
-              onPress={this._ajouter.bind(this)}
+              onPress={this._ajouter.bind(this, projet)}
             >
               <View style={styles.signin}>
-                  <Text style={styles.whiteFont}>Ajouter</Text>
+                  <Text style={styles.whiteFont}>Ajouter Depense</Text>
               </View>
             </TouchableOpacity>
             <OptionList ref="OPTIONLIST"/>
@@ -186,8 +119,8 @@ var styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: windowSize.width,
-        height: windowSize.height
+        width: width,
+        height: height
     },
     header: {
         justifyContent: 'center',
@@ -263,7 +196,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)',
     fontSize: 25,
     textAlign: 'center',
-    color: 'white',
+    color: 'white'
   },
   circle: {
     justifyContent: 'center',

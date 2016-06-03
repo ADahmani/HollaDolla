@@ -17,7 +17,7 @@ import {
 } from '../core/selectme';
 var {width, height} = Dimensions.get('window');
 
-import CreateProjetMutation from '../../mutations/projet/CreateProjetMutation';
+import CreateSpendingMutation from '../../mutations/projet/CreateSpendingMutation';
 
 var windowSize = Dimensions.get('window');
 var types = {
@@ -45,26 +45,35 @@ export default class NewProjetView extends Component {
 
   _ajouter(){
     var viewer = this.props.viewer;
-    var city = this.state.city;
-    var type = this.props.type;
+    var amount = this.state.amount;
+    var from = 'pas important'; // se fait dans le backend
+    var projet = this.props.project;
     var name = this.state.name;
-    var participants = this.state.participants;
-    participants = _.map(participants, (participant) => {
+    var to = this.state.participants;
+    to = _.map(to, (participant) => {
       return participant.id;
     })
     Relay.Store.commitUpdate(
-      new CreateProjetMutation({
-        viewer,
-        participants,
-        name,
-        type,
-        city
+      new CreateSpendingMutation({
+        projet,
+        to,
+        amount,
       }),
       {
-        onSuccess: (data) => {
-          this.props.relay.forceFetch();
-          console.log(this.props.viewer, "boooom");
-          this.props.app.navigateReplace('START_SCREEN');
+        onSuccess: ({CreateSpending}) => {
+          var Spendings = CreateSpending.projet;
+
+          Spendings = _.pickBy(Spendings, function (propertyName) {
+              console.log('propertyName', propertyName);
+              return (typeof propertyName === "object")
+          });
+
+          console.log('Spendings', Spendings);
+          console.log('CreateSpending', CreateSpending);
+          CreateSpending.projet.spendings = Spendings;
+          var newdata = CreateSpending.projet;
+          console.log('newdata', newdata);
+          this.props.app.goToPrev();
         },
         onFailure: (err) => {
           var error = err.getError() || new Error('Mutation failed.');
@@ -93,48 +102,44 @@ export default class NewProjetView extends Component {
     var viewer = this.props.viewer || {};
     var me = viewer.me || {};
     var friends = me.friends || [];
+    var projet = this.props.project || {};;
+    var type = projet.type;
+    var projetName = projet.name;
     return (
         <View style={styles.container}>
             <Image style={styles.bg} source={{uri: 'http://i.imgur.com/xlQ56UK.jpg'}} />
             <View style={styles.typebox}>
               <Image
-               source={types[this.props.type].image}
+               source={types[projet.type].image}
                style={styles.typebox}>
                 <View style={[styles.backdropText, styles.typebox]}>
-                  <Text style={[styles.headline, styles.typebox]} >{types[this.props.type].name}</Text>
+                  <Text style={[styles.headline, styles.typebox]} >{'Ajout de dépense à ' +projetName.toUpperCase()}</Text>
                 </View>
                </Image>
           </View>
             <View style={styles.inputs}>
-                <View style={styles.inputContainer}>
+                <View style={[styles.inputContainer, {flex: 2}]}>
+                  <Text style={{color: '#fff'}} >Combien T'as payé?</Text>
                     <TextInput
-                      placeholder='Nom de projet'
-                      placeholderTextColor="#FFF"
-                      style={{color: '#fff', textAlign: 'center'}}
-                      onChangeText={(name) => this.setState({name})}
-                      value={this.state.name}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                      placeholder="Ville"
-                      placeholderTextColor="#FFF"
-                      style={{color: '#fff', textAlign: 'center'}}
-                      onChangeText={(city) => this.setState({city})}
-                      value={this.state.city}
+                      keyboardType='numbers-and-punctuation'
+                      placeholder='0'
+                      placeholderTextColor='#FFF'
+                      style={{color: '#fff', textAlign: 'center', fontSize: 25}}
+                      onChangeText={(amount) => this.setState({amount})}
+                      value={this.state.amount}
                     />
                 </View>
                 <View style={[styles.inputContainer, {flex: 4}]}>
-                <Text style={{color: '#fff'}} >Participants</Text>
+                <Text style={{color: '#fff'}} >Pour Qui?</Text>
                     <View style={styles.participantList}>
                       <Select
-                        width={150}
-                        ref="SELECT1"
                         dynamique={true}
+                        width={150}
+                        ref='SELECT1'
                         onSelect={this._canada.bind(this)}
                         styleText={{color: '#fff'}}
                         optionListRef={this._getOptionList.bind(this)}
-                        defaultValue="+">
+                        defaultValue='+'>
                         {_.map(friends, friend => {
                           friend = friend.split(';');
                           return <Option value = {{ami : friend}}>{friend[1]}</Option>
@@ -170,7 +175,7 @@ export default class NewProjetView extends Component {
                   <Text style={styles.whiteFont}>Ajouter</Text>
               </View>
             </TouchableOpacity>
-            <OptionList ref="OPTIONLIST"/>
+            <OptionList ref='OPTIONLIST'/>
         </View>
     );
   }
